@@ -10,10 +10,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+
     @ExceptionHandler(MessageNotFoundException.class)
     protected ResponseEntity<CustomExcept> handleMessageNotFoundExceptionException() {
         return new ResponseEntity<>(new CustomExcept("Сообщение не найдено",400), HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(MessageExistException.class)
     protected ResponseEntity<CustomExcept> handleMessageExistExceptionException() {
         return new ResponseEntity<>(new CustomExcept("Сообщение с таким айди уже существует",400), HttpStatus.BAD_REQUEST);
