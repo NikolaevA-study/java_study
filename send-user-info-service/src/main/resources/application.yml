@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: 'send-user-info-service'
+  kafka:
+    bootstrap-servers: localhost:29092,localhost:29093  # Адрес Kafka сервера
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer

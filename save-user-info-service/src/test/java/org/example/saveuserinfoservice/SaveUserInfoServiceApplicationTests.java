@@ -1,0 +1,13 @@
+package org.example.saveuserinfoservice;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class SaveUserInfoServiceApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
