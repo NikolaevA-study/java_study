@@ -1,8 +1,7 @@
 package org.example.saveuserinfoservice.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.saveuserinfoservice.message.UserMessage;
-import org.example.saveuserinfoservice.model.UserModel;
+import org.example.saveuserinfoservice.dto.UserDTO;
 import org.example.saveuserinfoservice.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +14,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<UserModel> getUsers() {
-            return userService.getAllUsers();
+    public List<UserDTO> getUsers() {
+        return userService.getAllUsers();
     }
 
     @PostMapping("/search")
-    public List<UserModel> getUserByParam(@RequestBody UserMessage request) {
+    public List<UserDTO> getUserByParam(@RequestBody UserDTO request) {
         return userService.getUsersByParam(request);
     }
 }

@@ -1,12 +1,14 @@
 package org.example.saveuserinfoservice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.saveuserinfoservice.message.UserMessage;
+import org.example.saveuserinfoservice.dto.UserDTO;
+import org.example.saveuserinfoservice.mapper.UserMapper;
 import org.example.saveuserinfoservice.model.UserModel;
 import org.example.saveuserinfoservice.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -14,11 +16,11 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public List<UserModel> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        return convertToDTO(userRepository.findAll());
     }
 
-    public List<UserModel> getUsersByParam(UserMessage param) {
+    public List<UserDTO> getUsersByParam(UserDTO param) {
         String name = param.getName();
         String surname = param.getSurname();
         if (name != null && surname != null) {
@@ -31,15 +33,19 @@ public class UserService {
         return getAllUsers();
     }
 
-    public List<UserModel> getUsersByName(String name) {
-        return userRepository.findUsersModelByName(name);
+    public List<UserDTO> getUsersByName(String name) {
+        return convertToDTO(userRepository.findUsersModelByName(name));
     }
 
-    public List<UserModel> getUsersBySurname(String surname) {
-        return userRepository.findUsersModelBySurname(surname);
+    public List<UserDTO> getUsersBySurname(String surname) {
+        return convertToDTO(userRepository.findUsersModelBySurname(surname));
     }
 
-    public List<UserModel> getUsersByNameAndSurname(String name,String surname) {
-        return userRepository.findUsersModelByNameAndSurname(name,surname);
+    public List<UserDTO> getUsersByNameAndSurname(String name,String surname) {
+        return convertToDTO(userRepository.findUsersModelByNameAndSurname(name,surname));
+    }
+
+    private List<UserDTO> convertToDTO(List<UserModel> users) {
+        return users.stream().map(UserMapper.INSTANCE::toDTO).collect(Collectors.toList());
     }
 }

@@ -22,8 +22,6 @@ dependencies {
     // Работа с базой данных PostgreSQL (используйте H2 если нужно для тестов)
     implementation 'org.postgresql:postgresql'
 
-
-
     // JPA API для работы с Entity
     implementation 'javax.persistence:javax.persistence-api:2.2'
 
@@ -37,6 +35,8 @@ dependencies {
     // Lombok для удобства написания кода
     compileOnly 'org.projectlombok:lombok:1.18.36'
     annotationProcessor "org.projectlombok:lombok"
+
+    implementation 'org.mapstruct:mapstruct:1.6.3'
 }
 
 test {
