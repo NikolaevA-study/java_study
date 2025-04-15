@@ -6,3 +6,11 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: javaapp
+    password: javaapp
+    virtual-host: uservh
+app:
+  messaging: kafka # rabbit или kafka

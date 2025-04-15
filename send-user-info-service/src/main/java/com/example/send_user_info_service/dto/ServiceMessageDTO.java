@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserKafkaMessage  {
+public class ServiceMessageDTO {
     private String httpMethod; // "POST", "PUT", "DELETE", "GET"
     private UserDTO user;
 }
