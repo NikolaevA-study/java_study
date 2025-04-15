@@ -16,6 +16,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final UserMapper userMapper;
+
     public List<UserDTO> getAllUsers() {
         return convertToDTO(userRepository.findAll());
     }
@@ -46,6 +48,6 @@ public class UserService {
     }
 
     private List<UserDTO> convertToDTO(List<UserModel> users) {
-        return users.stream().map(UserMapper.INSTANCE::toDTO).collect(Collectors.toList());
+        return users.stream().map(userMapper::toDTO).collect(Collectors.toList());
     }
 }
