@@ -36,15 +36,15 @@ public class UserService {
     }
 
     public List<UserDTO> getUsersByName(String name) {
-        return convertToDTO(userRepository.findUsersModelByName(name));
+        return convertToDTO(userRepository.findByName(name));
     }
 
     public List<UserDTO> getUsersBySurname(String surname) {
-        return convertToDTO(userRepository.findUsersModelBySurname(surname));
+        return convertToDTO(userRepository.findBySurname(surname));
     }
 
     public List<UserDTO> getUsersByNameAndSurname(String name,String surname) {
-        return convertToDTO(userRepository.findUsersModelByNameAndSurname(name,surname));
+        return convertToDTO(userRepository.findByNameAndSurname(name,surname));
     }
 
     private List<UserDTO> convertToDTO(List<UserModel> users) {

@@ -16,7 +16,6 @@ public class RabbitProducerService implements MessageSender {
     @Override
     public void send(ServiceMessageDTO userRabbitDTO) {
         try {
-
             String msgJson = new ObjectMapper().writeValueAsString(userRabbitDTO);
             rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE, RabbitConfig.ROUTING_KEY, msgJson);
         }

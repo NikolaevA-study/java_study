@@ -11,12 +11,11 @@ import java.util.List;
 public class UserDTO {
     @NotNull(message = "обязательное поле")
     private Long id;
-    @NotNull(message = "обязательное поле")
-    @NotBlank(message = "не может быть пустым")
+    @NotBlank(message = "обязательное поле")
     private String name;
     private String surname;
     @NotNull(message = "обязательное поле")
-    private int age;
+    private Integer age;
     @Valid
     private List<UserContactsDTO> contacts;
 }

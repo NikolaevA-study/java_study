@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 @RestControllerAdvice
 public class GlobalValidateExceptionHandler {
@@ -15,11 +14,11 @@ public class GlobalValidateExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         Map<String, String> errorsResut = new HashMap<>();
-        AtomicReference<String> errorMsg = new AtomicReference<>("");
+        StringBuilder errorMsg = new StringBuilder();
         e.getBindingResult().getFieldErrors().forEach(error ->
-            errorMsg.set(errorMsg + ", " + error.getField() + ": " + error.getDefaultMessage())
+                errorMsg.append(error.getField()).append(": ").append(error.getDefaultMessage())
         );
-        errorsResut.put("errorMsg", errorMsg.get());
+        errorsResut.put("errorMsg", errorMsg.toString());
         return ResponseEntity.badRequest().body(errorsResut);
     }
 

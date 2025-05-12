@@ -25,6 +25,9 @@ dependencies {
     // JPA API для работы с Entity
     implementation 'javax.persistence:javax.persistence-api:2.2'
 
+    // Валидация
+    implementation 'org.springframework.boot:spring-boot-starter-validation:3.4.4'
+
     // Spring Boot DevTools для улучшенной разработки
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 
