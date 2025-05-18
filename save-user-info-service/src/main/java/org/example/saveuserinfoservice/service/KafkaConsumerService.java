@@ -10,7 +10,6 @@ import org.example.saveuserinfoservice.dto.UserContactsDTO;
 import org.example.saveuserinfoservice.dto.UserDTO;
 import org.example.saveuserinfoservice.repository.UserContactsRepository;
 import org.example.saveuserinfoservice.repository.UserRepository;
-import org.springframework.http.HttpMethod;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
