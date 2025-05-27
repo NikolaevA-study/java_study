@@ -14,3 +14,5 @@ spring:
     virtual-host: uservh
 app:
   messaging: kafka # rabbit или kafka
+server:
+  port: 7070

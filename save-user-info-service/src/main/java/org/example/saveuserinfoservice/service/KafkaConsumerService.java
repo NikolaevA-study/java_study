@@ -4,9 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.saveuserinfoservice.dto.UserKafkaDTO;
+import org.example.saveuserinfoservice.mapper.UserMapper;
 import org.example.saveuserinfoservice.model.UserModel;
-import org.example.saveuserinfoservice.model.UserContactsModel;
-import org.example.saveuserinfoservice.dto.UserContactsDTO;
 import org.example.saveuserinfoservice.dto.UserDTO;
 import org.example.saveuserinfoservice.repository.UserContactsRepository;
 import org.example.saveuserinfoservice.repository.UserRepository;
@@ -23,6 +22,7 @@ public class KafkaConsumerService {
     private final UserContactsRepository userContactsRepository;
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
+    private final UserMapper userMapper;
 
     // Этот метод будет вызываться, когда приходит новое сообщение из Kafka
     @KafkaListener(topics = "user-topic", groupId = "user-info-consumer-group")
@@ -46,44 +46,19 @@ public class KafkaConsumerService {
     }
 
     private void invokePost(UserDTO userDTO) {
-        UserModel user = new UserModel();
-        user.setName(userDTO.getName());
-        user.setSurname(userDTO.getSurname());
-        user.setAge(userDTO.getAge());
-        user.setId(userDTO.getId());
-        // Добавляем контакты
-        saveContacts(user, userDTO.getContacts());
+        userRepository.save(userMapper.toEntity(userDTO));
     }
 
     private void invokeDelete(UserDTO userDTO) {
         List<UserModel> users = userRepository.findByNameAndSurname(userDTO.getName(), userDTO.getSurname());
-        for (UserModel user : users) {
-            userContactsRepository.deleteUserContactsModelByUser(user);
-            userRepository.delete(user);
-        }
+        userRepository.deleteAll(users);
     }
 
     private void invokePatch(UserDTO userDTO) {
         Optional<UserModel> userOptional = userRepository.findById(userDTO.getId());
         if (userOptional.isPresent()) {
-            UserModel user = userOptional.get();
-            user.setAge(userDTO.getAge());
-            user.setName(userDTO.getName());
-            user.setSurname(userDTO.getSurname());
-            user.setAge(userDTO.getAge());
-            userContactsRepository.deleteUserContactsModelByUser(user);
-            saveContacts(user, userDTO.getContacts());
-            userRepository.save(user);
-        }
-    }
-
-    private void saveContacts(UserModel user, List<UserContactsDTO> contactsDTOs) {
-        for (UserContactsDTO dto : contactsDTOs) {
-            UserContactsModel contact = new UserContactsModel();
-            contact.setType(dto.getType());
-            contact.setValue(dto.getValue());
-            contact.setUser(user);
-            userContactsRepository.save(contact);
+            userContactsRepository.deleteAll(userContactsRepository.findByUser(userOptional.get()));
+            userRepository.save(userMapper.toEntity(userDTO));
         }
     }
 }

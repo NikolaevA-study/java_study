@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface  UserContactsRepository extends JpaRepository<UserContactsModel, Long> {
-    @Modifying
-    @Query("delete from UserContactsModel ucm where ucm.user=?1")
-    void deleteUserContactsModelByUser(@Param("user") UserModel user);
+    List<UserContactsModel> findByUser(UserModel user);
 }

@@ -32,6 +32,5 @@ public class UserModel {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonProperty("contacts")
-    @JsonManagedReference
     private List<UserContactsModel> userContactsModel;
 }

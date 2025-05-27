@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class UserContactsModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -21,8 +21,7 @@ public class UserContactsModel {
     @Column(name = "value", nullable = false, length = 250)
     private String value;
 
-    @JoinColumn(name = "user_id", table="cx_user_contacts",nullable = false)
+    @JoinColumn(name = "user_id", table="cx_user_contacts")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JsonBackReference
     private UserModel user;
 }
